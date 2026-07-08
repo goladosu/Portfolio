@@ -123,7 +123,9 @@ def load_pipeline():
         return None, f"Failed to load model: {e}"
 
 
-pipeline, load_err = load_pipeline()
+# Don't load model at startup - load it only when needed
+pipeline = None
+load_err = None
 
 
 # ==============================================================================
@@ -646,6 +648,11 @@ def page_projects():
 def page_dropout_project():
     st.title("Clinical Trial Dropout Risk — Deployed Model")
 
+    # Lazy load the model only when this page is accessed
+    global pipeline, load_err
+    if pipeline is None and load_err is None:
+        pipeline, load_err = load_pipeline()
+    
     if load_err:
         st.error(load_err)
         st.write("Current working directory:", os.getcwd())
