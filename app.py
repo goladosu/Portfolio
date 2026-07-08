@@ -925,8 +925,9 @@ def page_revenue_dashboard():
     # ========== INTERACTIVE VISUALIZATIONS ==========
     st.subheader("📊 Interactive Visualizations")
     
-    # Tab layout for organized charts
-    tab1, tab2, tab3, tab4 = st.tabs(["💰 Revenue Flow", "🏥 Department Analysis", "📈 Trends", "⏰ AR Aging"])
+    try:
+        # Tab layout for organized charts
+        tab1, tab2, tab3, tab4 = st.tabs(["💰 Revenue Flow", "🏥 Department Analysis", "📈 Trends", "⏰ AR Aging"])
     
     with tab1:
         st.markdown("### Revenue Funnel: From Billed to Collected")
@@ -1089,6 +1090,10 @@ def page_revenue_dashboard():
             st.metric("0-30 Days", "$28.5M", delta="+35% Healthy", delta_color="normal")
         
         st.info("💡 **Key Insight:** $12.3M sitting over 120 days (1,801 claims). Of these, 1,797 already denied — immediate action needed: appeal or write off.")
+    
+    except Exception as e:
+        st.error(f"⚠️ Error loading interactive visualizations: {str(e)}")
+        st.info("The dashboard data is available in the executive summary above. Interactive charts will be restored shortly.")
     
     st.divider()
     
