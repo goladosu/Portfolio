@@ -7,3 +7,4 @@ matplotlib
 xgboost
 shap
 imbalanced-learn ==0.14.0
+plotly
