@@ -936,11 +936,46 @@ def page_revenue_dashboard():
     - **Collection Efficiency**: Overall efficiency metrics and trends
     """)
     
-    # ========== INTERACTIVE VISUALIZATIONS ==========
-    st.subheader("📊 Interactive Visualizations")
+    # ========== EXECUTIVE KPIs ==========
+    st.subheader("📊 Key Performance Indicators")
     
-    # Tab layout for organized charts
-    tab1, tab2, tab3, tab4 = st.tabs(["💰 Revenue Flow", "🏥 Department Analysis", "📈 Trends", "⏰ AR Aging"])
+    # Top-level metrics
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    with col1:
+        st.metric("Total Encounters", "20,000")
+        st.metric("Avg Days in AR", "45 days", delta="-15 days", delta_color="normal")
+    
+    with col2:
+        st.metric("Total Billed", "$136M")
+        st.metric("Collection Rate", "48%", delta="+3%", delta_color="normal")
+    
+    with col3:
+        st.metric("Total Allowed", "$77.3M")
+        st.metric("Denial Rate", "11%", delta="-2%", delta_color="inverse")
+    
+    with col4:
+        st.metric("Total Paid", "$64.8M")
+        st.metric("Underpayment", "$2.1M", delta="Problem area", delta_color="off")
+    
+    with col5:
+        st.metric("Net Revenue", "$64.8M")
+        st.metric("Total Claims", "20,000")
+    
+    st.divider()
+    
+    # ========== INTERACTIVE VISUALIZATIONS ==========
+    st.subheader("📈 Interactive Analytics")
+    
+    # Enhanced tab layout with 6 categories matching dashboard
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "💰 Revenue Flow",
+        "🏥 Department Analysis", 
+        "🚫 Denials Analysis",
+        "🏦 Payer Mix",
+        "⏰ AR Aging",
+        "📈 Trends"
+    ])
     
     with tab1:
         st.markdown("### Revenue Funnel: From Billed to Collected")
@@ -1011,56 +1046,146 @@ def page_revenue_dashboard():
         st.info("💡 **Key Insight:** ICU, Surgery, and Emergency departments have denial rates 2-3 percentage points above average. Focus denial prevention efforts here for maximum impact.")
     
     with tab3:
-        st.markdown("### Collection Trends Over Time")
+        st.markdown("### Denials Analysis")
         
-        # Monthly collection trend data
-        months = pd.date_range(start='2024-01', end='2025-12', freq='MS')
-        np.random.seed(42)
-        
-        trend_data = pd.DataFrame({
-            'Month': months,
-            'Collection_Rate': [45 + i*0.5 + np.random.normal(0, 1.5) for i in range(len(months))],
-            'Amount_Collected': [2.5 + i*0.08 + np.random.normal(0, 0.3) for i in range(len(months))]
+        # Denials by Reason
+        st.markdown("#### Top Denial Reasons")
+        denial_reasons = pd.DataFrame({
+            'Reason': [
+                'Incomplete Documentation',
+                'Missing Pre-Authorization', 
+                'Timely Filing',
+                'Coding Error',
+                'Medical Necessity',
+                'Duplicate Claim',
+                'Non-Covered Service',
+                'Patient Eligibility'
+            ],
+            'Count': [349, 325, 322, 287, 245, 198, 156, 118]
         })
         
-        # Dual axis chart
-        fig_trend = go.Figure()
-        
-        # Collection rate line
-        fig_trend.add_trace(go.Scatter(
-            x=trend_data['Month'],
-            y=trend_data['Collection_Rate'],
-            name='Collection Rate (%)',
-            mode='lines+markers',
-            line=dict(color='#667eea', width=3),
-            yaxis='y'
-        ))
-        
-        # Amount collected bars
-        fig_trend.add_trace(go.Bar(
-            x=trend_data['Month'],
-            y=trend_data['Amount_Collected'],
-            name='Amount Collected ($M)',
-            marker_color='#48bb78',
-            opacity=0.6,
-            yaxis='y2'
-        ))
-        
-        fig_trend.update_layout(
-            title='Collection Performance Trends (2024-2025)',
-            xaxis_title='Month',
-            yaxis=dict(title='Collection Rate (%)', side='left', range=[40, 60]),
-            yaxis2=dict(title='Amount Collected ($M)', overlaying='y', side='right', range=[0, 6]),
+        fig_denial_reason = px.bar(
+            denial_reasons,
+            x='Reason',
+            y='Count',
+            title='Denial Volume by Reason',
+            color='Count',
+            color_continuous_scale='Reds',
+            text='Count'
+        )
+        fig_denial_reason.update_traces(textposition='outside')
+        fig_denial_reason.update_layout(
             height=400,
-            hovermode='x unified',
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            showlegend=False,
+            xaxis_tickangle=-45,
+            xaxis_title="Denial Reason",
+            yaxis_title="Number of Claims"
         )
         
-        st.plotly_chart(fig_trend, use_container_width=True)
+        st.plotly_chart(fig_denial_reason, use_container_width=True)
         
-        st.info("💡 **Key Insight:** Collection rate improved from 45% to 52% over 2 years. Claim resolution time decreased from 60 to under 30 days.")
+        # Denials by Payer Type
+        st.markdown("#### Denial Rates by Payer Type")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            payer_denial = pd.DataFrame({
+                'Payer_Type': ['Commercial', 'Medicare', 'Medicaid', 'Self-Pay'],
+                'Denial_Rate': [9.2, 10.5, 13.8, 15.2],
+                'Claims': [8500, 7200, 3100, 1200]
+            })
+            
+            fig_payer_denial = px.bar(
+                payer_denial,
+                x='Payer_Type',
+                y='Denial_Rate',
+                title='Denial Rate by Payer Type (%)',
+                color='Denial_Rate',
+                color_continuous_scale='OrRd',
+                text='Denial_Rate'
+            )
+            fig_payer_denial.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
+            fig_payer_denial.update_layout(height=350, showlegend=False)
+            
+            st.plotly_chart(fig_payer_denial, use_container_width=True)
+        
+        with col2:
+            # Denial metrics
+            st.metric("Total Denied Claims", "2,200", delta="-8% vs last quarter", delta_color="normal")
+            st.metric("Avg Denial Amount", "$3,450")
+            st.metric("Total Denied $", "$7.6M")
+            st.metric("Successfully Appealed", "18%", delta="+3%", delta_color="normal")
+        
+        st.info("💡 **Key Insight:** Top 3 denial reasons (Documentation, Pre-Auth, Timely Filing) account for 50% of all denials. Self-Pay and Medicaid have highest denial rates - target prevention efforts here.")
     
     with tab4:
+        st.markdown("### Payer Mix Analysis")
+        
+        # Payer distribution
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### Claims Volume by Payer Type")
+            
+            payer_mix = pd.DataFrame({
+                'Payer_Type': ['Commercial', 'Medicare', 'Medicaid', 'Self-Pay'],
+                'Claims': [8500, 7200, 3100, 1200],
+                'Percentage': [42.5, 36.0, 15.5, 6.0]
+            })
+            
+            fig_payer_pie = px.pie(
+                payer_mix,
+                values='Claims',
+                names='Payer_Type',
+                title='Payer Mix Distribution',
+                color_discrete_sequence=['#667eea', '#764ba2', '#f093fb', '#4facfe']
+            )
+            fig_payer_pie.update_traces(textposition='inside', textinfo='percent+label')
+            fig_payer_pie.update_layout(height=350)
+            
+            st.plotly_chart(fig_payer_pie, use_container_width=True)
+        
+        with col2:
+            st.markdown("#### Revenue by Payer Type")
+            
+            payer_revenue = pd.DataFrame({
+                'Payer_Type': ['Commercial', 'Medicare', 'Medicaid', 'Self-Pay'],
+                'Revenue': [31.2, 22.8, 8.4, 2.4]
+            })
+            
+            fig_payer_rev = px.bar(
+                payer_revenue,
+                x='Payer_Type',
+                y='Revenue',
+                title='Total Paid by Payer Type ($M)',
+                color='Revenue',
+                color_continuous_scale='Blues',
+                text='Revenue'
+            )
+            fig_payer_rev.update_traces(texttemplate='$%{text:.1f}M', textposition='outside')
+            fig_payer_rev.update_layout(height=350, showlegend=False)
+            
+            st.plotly_chart(fig_payer_rev, use_container_width=True)
+        
+        # Payer performance metrics
+        st.markdown("#### Payer Performance Summary")
+        
+        payer_performance = pd.DataFrame({
+            'Payer Type': ['Commercial', 'Medicare', 'Medicaid', 'Self-Pay'],
+            'Claims': ['8,500', '7,200', '3,100', '1,200'],
+            'Billed': ['$64.6M', '$46.2M', '$18.8M', '$6.4M'],
+            'Paid': ['$31.2M', '$22.8M', '$8.4M', '$2.4M'],
+            'Collection Rate': ['48.3%', '49.4%', '44.7%', '37.5%'],
+            'Denial Rate': ['9.2%', '10.5%', '13.8%', '15.2%'],
+            'Avg Days in AR': ['42', '48', '52', '65']
+        })
+        
+        st.dataframe(payer_performance, use_container_width=True, hide_index=True)
+        
+        st.info("💡 **Key Insight:** Commercial payers generate 48% of revenue with best collection rates (48.3%). Self-Pay has poorest performance (37.5% collection, 15% denial rate, 65 days AR).")
+    
+    with tab5:
         st.markdown("### Accounts Receivable Aging")
         
         # AR Aging data
@@ -1103,6 +1228,115 @@ def page_revenue_dashboard():
             st.metric("0-30 Days", "$28.5M", delta="+35% Healthy", delta_color="normal")
         
         st.info("💡 **Key Insight:** $12.3M sitting over 120 days (1,801 claims). Of these, 1,797 already denied — immediate action needed: appeal or write off.")
+    
+    with tab6:
+        st.markdown("### Collection Performance Trends")
+        
+        # Monthly collection trend data
+        months = pd.date_range(start='2024-01', end='2025-12', freq='MS')
+        np.random.seed(42)
+        
+        trend_data = pd.DataFrame({
+            'Month': months,
+            'Collection_Rate': [45 + i*0.5 + np.random.normal(0, 1.5) for i in range(len(months))],
+            'Amount_Collected': [2.5 + i*0.08 + np.random.normal(0, 0.3) for i in range(len(months))],
+            'Denial_Rate': [13 - i*0.15 + np.random.normal(0, 0.8) for i in range(len(months))],
+            'Days_in_AR': [60 - i*1.2 + np.random.normal(0, 2) for i in range(len(months))]
+        })
+        
+        # Two charts side by side
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### Collection Rate & Revenue Trends")
+            
+            # Dual axis chart
+            fig_collection = go.Figure()
+            
+            # Collection rate line
+            fig_collection.add_trace(go.Scatter(
+                x=trend_data['Month'],
+                y=trend_data['Collection_Rate'],
+                name='Collection Rate (%)',
+                mode='lines+markers',
+                line=dict(color='#667eea', width=3),
+                yaxis='y'
+            ))
+            
+            # Amount collected bars
+            fig_collection.add_trace(go.Bar(
+                x=trend_data['Month'],
+                y=trend_data['Amount_Collected'],
+                name='Amount Collected ($M)',
+                marker_color='#48bb78',
+                opacity=0.6,
+                yaxis='y2'
+            ))
+            
+            fig_collection.update_layout(
+                xaxis_title='Month',
+                yaxis=dict(title='Collection Rate (%)', side='left', range=[40, 60]),
+                yaxis2=dict(title='Amount Collected ($M)', overlaying='y', side='right', range=[0, 6]),
+                height=400,
+                hovermode='x unified',
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            )
+            
+            st.plotly_chart(fig_collection, use_container_width=True)
+        
+        with col2:
+            st.markdown("#### Denial Rate & Days in AR Trends")
+            
+            fig_ops = go.Figure()
+            
+            # Denial rate line
+            fig_ops.add_trace(go.Scatter(
+                x=trend_data['Month'],
+                y=trend_data['Denial_Rate'],
+                name='Denial Rate (%)',
+                mode='lines+markers',
+                line=dict(color='#f56565', width=3),
+                yaxis='y'
+            ))
+            
+            # Days in AR line
+            fig_ops.add_trace(go.Scatter(
+                x=trend_data['Month'],
+                y=trend_data['Days_in_AR'],
+                name='Avg Days in AR',
+                mode='lines+markers',
+                line=dict(color='#ed8936', width=3),
+                yaxis='y2'
+            ))
+            
+            fig_ops.update_layout(
+                xaxis_title='Month',
+                yaxis=dict(title='Denial Rate (%)', side='left', range=[8, 15]),
+                yaxis2=dict(title='Days in AR', overlaying='y', side='right', range=[25, 65]),
+                height=400,
+                hovermode='x unified',
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            )
+            
+            st.plotly_chart(fig_ops, use_container_width=True)
+        
+        # Monthly comparison table
+        st.markdown("#### Key Metrics by Month (Recent 6 Months)")
+        
+        recent_months = trend_data.tail(6).copy()
+        recent_months['Month'] = recent_months['Month'].dt.strftime('%b %Y')
+        recent_months['Collection_Rate'] = recent_months['Collection_Rate'].apply(lambda x: f"{x:.1f}%")
+        recent_months['Amount_Collected'] = recent_months['Amount_Collected'].apply(lambda x: f"${x:.1f}M")
+        recent_months['Denial_Rate'] = recent_months['Denial_Rate'].apply(lambda x: f"{x:.1f}%")
+        recent_months['Days_in_AR'] = recent_months['Days_in_AR'].apply(lambda x: f"{int(x)} days")
+        
+        st.dataframe(
+            recent_months[['Month', 'Collection_Rate', 'Amount_Collected', 'Denial_Rate', 'Days_in_AR']],
+            use_container_width=True,
+            hide_index=True
+        )
+        
+        st.info("💡 **Key Insight:** Collection rate improved from 45% to 52% over 2 years. Denial rate decreased from 13% to 10%, and claim resolution time improved from 60 to 30 days. Consistent upward trend in all key metrics.")
     
     st.divider()
     
