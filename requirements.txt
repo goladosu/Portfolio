@@ -1,10 +1,10 @@
 streamlit
-joblib
-scikit-learn ==1.6.1
 numpy
 pandas
 matplotlib
-xgboost
-shap
-imbalanced-learn ==0.14.0
 plotly
+joblib
+scikit-learn<1.6
+xgboost
+imbalanced-learn
+shap

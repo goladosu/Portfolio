@@ -5,16 +5,28 @@ from typing import List, Optional
 
 import numpy as np
 import pandas as pd
-import joblib
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
-
-# ML and Streamlit components
-from sklearn.base import BaseEstimator, TransformerMixin
-import shap
 import streamlit as st
 import streamlit.components.v1 as components
+
+# Delay heavy ML imports - load only when needed
+try:
+    import joblib
+except ImportError:
+    joblib = None
+
+try:
+    from sklearn.base import BaseEstimator, TransformerMixin
+except ImportError:
+    BaseEstimator = object
+    TransformerMixin = object
+
+try:
+    import shap
+except ImportError:
+    shap = None
 
 
 # ==============================================================================
@@ -648,11 +660,6 @@ def page_projects():
 def page_dropout_project():
     st.title("Clinical Trial Dropout Risk — Deployed Model")
 
-    # Lazy load the model only when this page is accessed
-    global pipeline, load_err
-    if pipeline is None and load_err is None:
-        pipeline, load_err = load_pipeline()
-    
     if load_err:
         st.error(load_err)
         st.write("Current working directory:", os.getcwd())
@@ -932,9 +939,8 @@ def page_revenue_dashboard():
     # ========== INTERACTIVE VISUALIZATIONS ==========
     st.subheader("📊 Interactive Visualizations")
     
-    try:
-        # Tab layout for organized charts
-        tab1, tab2, tab3, tab4 = st.tabs(["💰 Revenue Flow", "🏥 Department Analysis", "📈 Trends", "⏰ AR Aging"])
+    # Tab layout for organized charts
+    tab1, tab2, tab3, tab4 = st.tabs(["💰 Revenue Flow", "🏥 Department Analysis", "📈 Trends", "⏰ AR Aging"])
     
     with tab1:
         st.markdown("### Revenue Funnel: From Billed to Collected")
@@ -1097,10 +1103,6 @@ def page_revenue_dashboard():
             st.metric("0-30 Days", "$28.5M", delta="+35% Healthy", delta_color="normal")
         
         st.info("💡 **Key Insight:** $12.3M sitting over 120 days (1,801 claims). Of these, 1,797 already denied — immediate action needed: appeal or write off.")
-    
-    except Exception as e:
-        st.error(f"⚠️ Error loading interactive visualizations: {str(e)}")
-        st.info("The dashboard data is available in the executive summary above. Interactive charts will be restored shortly.")
     
     st.divider()
     
