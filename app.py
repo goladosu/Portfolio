@@ -233,15 +233,21 @@ def get_shap_for_single_row(pipe, input_df):
     except Exception:
         feature_names = np.array([f"x{i}" for i in range(X_prep_dense.shape[1])], dtype=object)
 
-    # Compute SHAP
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(X_prep_dense)
+    # Compute SHAP (if available)
+    if shap is not None:
+        try:
+            explainer = shap.TreeExplainer(model)
+            shap_values = explainer.shap_values(X_prep_dense)
 
-    # Get the values for class 1 (Dropout)
-    if isinstance(shap_values, list):
-        shap_row = np.array(shap_values[1][0]).ravel()
+            # Get the values for class 1 (Dropout)
+            if isinstance(shap_values, list):
+                shap_row = np.array(shap_values[1][0]).ravel()
+            else:
+                shap_row = np.array(shap_values[0]).ravel()
+        except Exception:
+            shap_row = None
     else:
-        shap_row = np.array(shap_values[0]).ravel()
+        shap_row = None
 
     return prob, pred, shap_row, feature_names
 
@@ -832,19 +838,31 @@ can intervene early.
     st.write(f"Predicted class (thresholded): {'Dropout (1)' if pred == 1 else 'Completer (0)'}")
     st.caption("This is a risk estimate, not a guarantee.")
 
-    st.subheader("Top drivers of this prediction (SHAP)")
-    order = np.argsort(np.abs(shap_row))[::-1][:10]
-    top_df = pd.DataFrame({
-        "feature": feat_names[order],
-        "shap_value": shap_row[order],
-    })
-    st.dataframe(top_df, use_container_width=True, hide_index=True)
+    if shap_row is not None:
+        st.subheader("Top drivers of this prediction (SHAP)")
+        order = np.argsort(np.abs(shap_row))[::-1][:10]
+        top_df = pd.DataFrame({
+            "feature": feat_names[order],
+            "shap_value": shap_row[order],
+        })
+        st.dataframe(top_df, use_container_width=True, hide_index=True)
 
-    fig, ax = plt.subplots(figsize=(9, 4))
-    ax.barh(top_df["feature"][::-1], top_df["shap_value"][::-1])
-    ax.set_xlabel("SHAP contribution (positive increases dropout risk)")
-    ax.set_ylabel("Feature")
-    st.pyplot(fig, clear_figure=True)
+        # Use Plotly instead of matplotlib
+        fig_shap = go.Figure()
+        fig_shap.add_trace(go.Bar(
+            x=top_df["shap_value"][::-1],
+            y=top_df["feature"][::-1],
+            orientation='h',
+            marker_color=['#f56565' if x > 0 else '#48bb78' for x in top_df["shap_value"][::-1]]
+        ))
+        fig_shap.update_layout(
+            xaxis_title="SHAP contribution (positive increases dropout risk)",
+            yaxis_title="Feature",
+            height=400
+        )
+        st.plotly_chart(fig_shap, use_container_width=True)
+    else:
+        st.info("💡 SHAP explanations are available in the full Databricks deployment. This streamlined version focuses on predictions.")
 
     with st.expander("Show participant input"):
         st.dataframe(input_df, use_container_width=True)
