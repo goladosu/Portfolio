@@ -750,6 +750,24 @@ def page_dropout_project():
 
     st.divider()
     
+    # Show model-dependent content only if available
+    if not model_available:
+        st.warning("🚧 **Interactive Prediction Tool Temporarily Unavailable**")
+        st.info("""
+        The interactive prediction feature requires specific library versions that are available in the full Databricks deployment.
+        
+        📊 **What you saw above:**
+        - Project overview and methodology
+        - Business impact and results
+        - Model performance metrics
+        - Executive summary and recommendations
+        
+        🚀 **For live predictions:**
+        - Visit the full Databricks app (requires workspace access)
+        - Or contact me for a demo!
+        """)
+        return  # Exit early - don't show the prediction form
+    
     st.markdown(
         f"""
 ### Interactive Model: Predict Dropout Risk
