@@ -665,8 +665,14 @@ def page_projects():
 def page_dropout_project():
     st.title("Clinical Trial Dropout Risk — Deployed Model")
 
-    if load_err:
-        st.error(load_err)
+    # Lazy load the model only when this page is accessed
+    global pipeline, load_err
+    if pipeline is None and load_err is None:
+        pipeline, load_err = load_pipeline()
+    
+    # If model failed to load, show error and stop
+    if load_err or pipeline is None:
+        st.error(f"Model loading error: {load_err or 'Pipeline is None'}")
         st.write("Current working directory:", os.getcwd())
         st.write("Files:", os.listdir("."))
         st.stop()
@@ -749,24 +755,6 @@ def page_dropout_project():
         """)
 
     st.divider()
-    
-    # Show model-dependent content only if available
-    if not model_available:
-        st.warning("🚧 **Interactive Prediction Tool Temporarily Unavailable**")
-        st.info("""
-        The interactive prediction feature requires specific library versions that are available in the full Databricks deployment.
-        
-        📊 **What you saw above:**
-        - Project overview and methodology
-        - Business impact and results
-        - Model performance metrics
-        - Executive summary and recommendations
-        
-        🚀 **For live predictions:**
-        - Visit the full Databricks app (requires workspace access)
-        - Or contact me for a demo!
-        """)
-        return  # Exit early - don't show the prediction form
     
     st.markdown(
         f"""
