@@ -143,7 +143,7 @@ load_err = None
 # Navigation state
 # ==============================================================================
 
-PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard"]
+PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard", "RCM Denial Forecast"]
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -1429,3 +1429,8 @@ elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
 elif page == "Revenue Cycle Dashboard":
     page_revenue_dashboard()
+elif page == "RCM Denial Forecast":
+    if forecast_page_main is not None:
+        forecast_page_main()
+    else:
+        st.error(f"Error loading forecast page: {forecast_import_error if 'forecast_import_error' in globals() else 'Unknown error'}")
