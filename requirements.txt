@@ -6,3 +6,5 @@ joblib
 scikit-learn
 xgboost
 imbalanced-learn
+
+databricks-sql-connector>=3.0.0
