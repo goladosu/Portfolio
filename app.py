@@ -143,7 +143,7 @@ load_err = None
 # Navigation state
 # ==============================================================================
 
-PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard and Denial Rate Forecast"]
+PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard", "Denial Rate Forecast"]
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -313,7 +313,7 @@ Use the navigation to explore projects, interact with models, and see how data s
 
     with col3:
         if st.button("💰 Revenue Dashboard", use_container_width=True):
-            st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
+            st.session_state.page = "Revenue Cycle Dashboard"
             st.rerun()
 
 
@@ -627,7 +627,7 @@ def page_projects():
         st.metric("Forecast Accuracy", "83%")
     
     if st.button("📊 View Revenue Dashboard", key="revenue", use_container_width=True):
-        st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
+        st.session_state.page = "Revenue Cycle Dashboard"
         st.rerun()
     
     st.divider()
@@ -1001,14 +1001,13 @@ def page_revenue_dashboard():
     st.subheader("📈 Interactive Analytics")
     
     # Enhanced tab layout with 6 categories matching dashboard
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "💰 Revenue Flow",
         "🏥 Department Analysis", 
         "🚫 Denials Analysis",
         "🏦 Payer Mix",
         "⏰ AR Aging",
-        "📈 Trends",
-        "📊 Denial Rate Forecast"
+        "📈 Trends"
     ])
     
     with tab1:
@@ -1372,116 +1371,10 @@ def page_revenue_dashboard():
         
         st.info("💡 **Key Insight:** Collection rate improved from 45% to 52% over 2 years. Denial rate decreased from 13% to 10%, and claim resolution time improved from 60 to 30 days. Consistent upward trend in all key metrics.")
     
-    with tab7:
-        st.markdown("### ML-Powered Denial Rate Forecast")
-        st.markdown("""
-        **6-Month Ahead Predictions** using ensemble modeling (Prophet, SARIMA, ARIMA, XGBoost, Baseline 3-MA)  
-        Automated model selection via walk-forward cross-validation based on MAPE.
-        """)
-        
-        # Forecast data (6 months ahead from Dec 2025)
-        forecast_dates = pd.date_range(start='2026-01', end='2026-06', freq='MS')
-        np.random.seed(42)
-        
-        forecast_data = pd.DataFrame({
-            'Month': forecast_dates,
-            'Predicted_Denial_Rate': [10.2, 10.5, 10.3, 9.8, 9.5, 9.7],
-            'Lower_Bound': [8.8, 9.1, 8.9, 8.4, 8.1, 8.3],
-            'Upper_Bound': [11.6, 11.9, 11.7, 11.2, 10.9, 11.1]
-        })
-        
-        # Key forecast metrics
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            st.metric("Best Model", "Baseline 3-MA", help="Automatically selected via walk-forward CV")
-        with col2:
-            st.metric("Model Accuracy", "83% (MAPE: 16.78%)", help="Mean Absolute Percentage Error")
-        with col3:
-            st.metric("Avg Predicted Rate", "10.0%", delta="-1.0% vs current", delta_color="normal")
-        with col4:
-            st.metric("Forecast Horizon", "6 Months", help="Jan 2026 - Jun 2026")
-        
-        st.markdown("#### Denial Rate Forecast with 95% Confidence Intervals")
-        
-        # Forecast visualization
-        fig_forecast = go.Figure()
-        
-        # Confidence interval (shaded area)
-        fig_forecast.add_trace(go.Scatter(
-            x=pd.concat([forecast_data['Month'], forecast_data['Month'][::-1]]),
-            y=pd.concat([forecast_data['Upper_Bound'], forecast_data['Lower_Bound'][::-1]]),
-            fill='toself',
-            fillcolor='rgba(102, 126, 234, 0.2)',
-            line=dict(color='rgba(255,255,255,0)'),
-            name='95% Confidence Interval',
-            showlegend=True
-        ))
-        
-        # Predicted values (line)
-        fig_forecast.add_trace(go.Scatter(
-            x=forecast_data['Month'],
-            y=forecast_data['Predicted_Denial_Rate'],
-            mode='lines+markers',
-            name='Predicted Denial Rate',
-            line=dict(color='#667eea', width=3),
-            marker=dict(size=8, color='#764ba2')
-        ))
-        
-        fig_forecast.update_layout(
-            xaxis_title='Month',
-            yaxis_title='Denial Rate (%)',
-            height=450,
-            hovermode='x unified',
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
-        )
-        
-        st.plotly_chart(fig_forecast, use_container_width=True)
-        
-        # Forecast table
-        st.markdown("#### Detailed Monthly Predictions")
-        
-        forecast_display = forecast_data.copy()
-        forecast_display['Month'] = forecast_display['Month'].dt.strftime('%B %Y')
-        forecast_display['Predicted_Denial_Rate'] = forecast_display['Predicted_Denial_Rate'].apply(lambda x: f"{x:.1f}%")
-        forecast_display['Lower_Bound'] = forecast_display['Lower_Bound'].apply(lambda x: f"{x:.1f}%")
-        forecast_display['Upper_Bound'] = forecast_display['Upper_Bound'].apply(lambda x: f"{x:.1f}%")
-        forecast_display.columns = ['Month', 'Predicted Rate', '95% CI Lower', '95% CI Upper']
-        
-        st.dataframe(forecast_display, use_container_width=True, hide_index=True)
-        
-        # Model performance comparison
-        with st.expander("📊 Model Performance Comparison"):
-            st.markdown("**5-Model Ensemble Evaluation** (Walk-Forward Cross-Validation)")
-            
-            model_performance = pd.DataFrame({
-                'Model': ['Baseline 3-MA', 'Prophet', 'SARIMA', 'ARIMA', 'XGBoost'],
-                'MAPE': ['16.78%', '18.23%', '19.45%', '21.12%', '22.87%'],
-                'MAE': ['1.85', '2.01', '2.14', '2.33', '2.52'],
-                'RMSE': ['2.12', '2.45', '2.67', '2.89', '3.15'],
-                'Status': ['✅ Selected', 'Runner-up', 'Good', 'Good', 'Acceptable']
-            })
-            
-            st.dataframe(model_performance, use_container_width=True, hide_index=True)
-            st.caption("Lower MAPE = Better accuracy. Baseline 3-month moving average selected for deployment.")
-        
-        st.info("💡 **Business Impact:** Forecast enables proactive resource allocation for denial management. Predicted stable denial rate (9.5-10.5%) suggests current improvement initiatives are working. Monitor June 2026 for potential uptick.")
-        
-        # Link to forecast notebook
-        st.markdown("---")
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            notebook_url = "https://dbc-b0a51582-e395.cloud.databricks.com/?o=7474658800238295#notebook/1960835260681026"
-            st.link_button(
-                "📓 View Full Forecast Notebook (EDA + Model Training)",
-                notebook_url,
-                use_container_width=True
-            )
-    
     st.divider()
     
     # Dashboard preview image and link
-    st.info("📊 This dashboard contains 7 interactive tabs with 30+ visualizations tracking revenue cycle KPIs plus ML-powered denial rate forecasting.")
+    st.info("📊 This dashboard contains 6 interactive tabs with 30+ visualizations tracking revenue cycle KPIs.")
     
     dashboard_url = "https://dbc-b0a51582-e395.cloud.databricks.com/sql/dashboards/01f1776f12fd171ca4d7f551417cc74d?o=7474658800238295"
     
@@ -1532,6 +1425,124 @@ def page_revenue_dashboard():
     st.caption("💡 Click the button above to explore the full interactive dashboard with drill-down capabilities")
 
 
+def page_denial_forecast():
+    st.title("📊 Denial Rate Forecast")
+    
+    st.markdown("""
+    **ML-Powered 6-Month Denial Rate Predictions**  
+    Using ensemble modeling with automated model selection via walk-forward cross-validation.
+    """)
+    
+    # Forecast data (6 months ahead from Dec 2025)
+    forecast_dates = pd.date_range(start='2026-01', end='2026-06', freq='MS')
+    np.random.seed(42)
+    
+    forecast_data = pd.DataFrame({
+        'Month': forecast_dates,
+        'Predicted_Denial_Rate': [10.2, 10.5, 10.3, 9.8, 9.5, 9.7],
+        'Lower_Bound': [8.8, 9.1, 8.9, 8.4, 8.1, 8.3],
+        'Upper_Bound': [11.6, 11.9, 11.7, 11.2, 10.9, 11.1]
+    })
+    
+    # Key forecast metrics
+    st.subheader("🎯 Forecast Overview")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Best Model", "Baseline 3-MA", help="Automatically selected via walk-forward CV")
+    with col2:
+        st.metric("Model Accuracy", "83%", delta="MAPE: 16.78%", help="Mean Absolute Percentage Error")
+    with col3:
+        st.metric("Avg Predicted Rate", "10.0%", delta="-1.0% vs current", delta_color="normal")
+    with col4:
+        st.metric("Forecast Horizon", "6 Months", help="Jan 2026 - Jun 2026")
+    
+    st.divider()
+    
+    st.subheader("📈 Denial Rate Forecast with 95% Confidence Intervals")
+    
+    # Forecast visualization
+    fig_forecast = go.Figure()
+    
+    # Confidence interval (shaded area)
+    fig_forecast.add_trace(go.Scatter(
+        x=pd.concat([forecast_data['Month'], forecast_data['Month'][::-1]]),
+        y=pd.concat([forecast_data['Upper_Bound'], forecast_data['Lower_Bound'][::-1]]),
+        fill='toself',
+        fillcolor='rgba(102, 126, 234, 0.2)',
+        line=dict(color='rgba(255,255,255,0)'),
+        name='95% Confidence Interval',
+        showlegend=True
+    ))
+    
+    # Predicted values (line)
+    fig_forecast.add_trace(go.Scatter(
+        x=forecast_data['Month'],
+        y=forecast_data['Predicted_Denial_Rate'],
+        mode='lines+markers',
+        name='Predicted Denial Rate',
+        line=dict(color='#667eea', width=3),
+        marker=dict(size=10, color='#764ba2')
+    ))
+    
+    fig_forecast.update_layout(
+        xaxis_title='Month',
+        yaxis_title='Denial Rate (%)',
+        height=500,
+        hovermode='x unified',
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+    )
+    
+    st.plotly_chart(fig_forecast, use_container_width=True)
+    
+    st.divider()
+    
+    # Forecast table
+    st.subheader("📊 Detailed Monthly Predictions")
+    
+    forecast_display = forecast_data.copy()
+    forecast_display['Month'] = forecast_display['Month'].dt.strftime('%B %Y')
+    forecast_display['Predicted_Denial_Rate'] = forecast_display['Predicted_Denial_Rate'].apply(lambda x: f"{x:.1f}%")
+    forecast_display['Lower_Bound'] = forecast_display['Lower_Bound'].apply(lambda x: f"{x:.1f}%")
+    forecast_display['Upper_Bound'] = forecast_display['Upper_Bound'].apply(lambda x: f"{x:.1f}%")
+    forecast_display.columns = ['Month', 'Predicted Rate', '95% CI Lower', '95% CI Upper']
+    
+    st.dataframe(forecast_display, use_container_width=True, hide_index=True)
+    
+    st.divider()
+    
+    # Model performance comparison
+    st.subheader("🥇 Model Performance Comparison")
+    st.markdown("**5-Model Ensemble Evaluation** (Walk-Forward Cross-Validation)")
+    
+    model_performance = pd.DataFrame({
+        'Model': ['Baseline 3-MA', 'Prophet', 'SARIMA', 'ARIMA', 'XGBoost'],
+        'MAPE': ['16.78%', '18.23%', '19.45%', '21.12%', '22.87%'],
+        'MAE': ['1.85', '2.01', '2.14', '2.33', '2.52'],
+        'RMSE': ['2.12', '2.45', '2.67', '2.89', '3.15'],
+        'Status': ['✅ Selected', 'Runner-up', 'Good', 'Good', 'Acceptable']
+    })
+    
+    st.dataframe(model_performance, use_container_width=True, hide_index=True)
+    st.caption("💡 Lower MAPE = Better accuracy. Baseline 3-month moving average selected for deployment.")
+    
+    st.divider()
+    
+    # Business impact
+    st.info("💡 **Business Impact:** Forecast enables proactive resource allocation for denial management. Predicted stable denial rate (9.5-10.5%) suggests current improvement initiatives are working. Monitor June 2026 for potential uptick.")
+    
+    # Link to forecast notebook
+    st.markdown("---")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        notebook_url = "https://dbc-b0a51582-e395.cloud.databricks.com/?o=7474658800238295#notebook/1960835260681026"
+        st.link_button(
+            "📓 View Full Forecast Notebook (EDA + Model Training)",
+            notebook_url,
+            use_container_width=True
+        )
+
+
 # ==============================================================================
 # Router
 # ==============================================================================
@@ -1544,5 +1555,7 @@ elif page == "Projects Summary":
     page_projects()
 elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
-elif page == "Revenue Cycle Dashboard and Denial Rate Forecast":
+elif page == "Revenue Cycle Dashboard":
     page_revenue_dashboard()
+elif page == "Denial Rate Forecast":
+    page_denial_forecast()
