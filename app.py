@@ -143,7 +143,7 @@ load_err = None
 # Navigation state
 # ==============================================================================
 
-PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard"]
+PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard and Denial Rate Forecast"]
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -313,7 +313,7 @@ Use the navigation to explore projects, interact with models, and see how data s
 
     with col3:
         if st.button("💰 Revenue Dashboard", use_container_width=True):
-            st.session_state.page = "Revenue Cycle Dashboard"
+            st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
             st.rerun()
 
 
@@ -1437,5 +1437,5 @@ elif page == "Projects Summary":
     page_projects()
 elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
-elif page == "Revenue Cycle Dashboard":
+elif page == "Revenue Cycle Dashboard and Denial Rate Forecast":
     page_revenue_dashboard()
