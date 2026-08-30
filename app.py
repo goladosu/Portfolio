@@ -143,7 +143,7 @@ load_err = None
 # Navigation state
 # ==============================================================================
 
-PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard", "Denial Rate Forecast"]
+PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard and Denial Rate Forecast"]
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -313,7 +313,7 @@ Use the navigation to explore projects, interact with models, and see how data s
 
     with col3:
         if st.button("💰 Revenue Dashboard", use_container_width=True):
-            st.session_state.page = "Revenue Cycle Dashboard"
+            st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
             st.rerun()
 
 
@@ -627,7 +627,7 @@ def page_projects():
         st.metric("Forecast Accuracy", "83%")
     
     if st.button("📊 View Revenue Dashboard", key="revenue", use_container_width=True):
-        st.session_state.page = "Revenue Cycle Dashboard"
+        st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
         st.rerun()
     
     st.divider()
@@ -885,7 +885,7 @@ can intervene early.
 
 
 
-def page_revenue_dashboard():
+def show_revenue_dashboard():
     st.title("Revenue Cycle Analytics Dashboard")
     
     # Executive Summary for Non-Technical Audiences
@@ -1425,7 +1425,7 @@ def page_revenue_dashboard():
     st.caption("💡 Click the button above to explore the full interactive dashboard with drill-down capabilities")
 
 
-def page_denial_forecast():
+def show_denial_forecast():
     st.title("📊 Denial Rate Forecast")
     
     st.markdown("""
@@ -1543,6 +1543,37 @@ def page_denial_forecast():
         )
 
 
+def page_revenue_dashboard():
+    """Main page with sub-navigation between Revenue Cycle Dashboard and Denial Rate Forecast"""
+    
+    # Initialize sub-page state
+    if "rcm_subpage" not in st.session_state:
+        st.session_state.rcm_subpage = "Revenue Cycle Dashboard"
+    
+    # Sub-navigation buttons
+    st.markdown("### Revenue Cycle Dashboard and Denial Rate Forecast")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("📊 Revenue Cycle Dashboard", use_container_width=True, type="primary" if st.session_state.rcm_subpage == "Revenue Cycle Dashboard" else "secondary"):
+            st.session_state.rcm_subpage = "Revenue Cycle Dashboard"
+            st.rerun()
+    
+    with col2:
+        if st.button("📈 Denial Rate Forecast", use_container_width=True, type="primary" if st.session_state.rcm_subpage == "Denial Rate Forecast" else "secondary"):
+            st.session_state.rcm_subpage = "Denial Rate Forecast"
+            st.rerun()
+    
+    st.divider()
+    
+    # Show the selected sub-page
+    if st.session_state.rcm_subpage == "Revenue Cycle Dashboard":
+        show_revenue_dashboard()
+    else:
+        show_denial_forecast()
+
+
 # ==============================================================================
 # Router
 # ==============================================================================
@@ -1555,7 +1586,5 @@ elif page == "Projects Summary":
     page_projects()
 elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
-elif page == "Revenue Cycle Dashboard":
+elif page == "Revenue Cycle Dashboard and Denial Rate Forecast":
     page_revenue_dashboard()
-elif page == "Denial Rate Forecast":
-    page_denial_forecast()
