@@ -115,6 +115,15 @@ class MissingIndicatorAdder(BaseEstimator, TransformerMixin):
 sys.modules["main"] = sys.modules[__name__]
 sys.modules["__main__"] = sys.modules[__name__]
 
+# Explicitly register custom classes in main namespace for unpickling
+import sys as _sys
+_current_module = _sys.modules[__name__]
+_sys.modules['__main__'].ClinicalConsistencyTransformer = ClinicalConsistencyTransformer
+_sys.modules['__main__'].MissingIndicatorAdder = MissingIndicatorAdder
+if 'main' in _sys.modules:
+    _sys.modules['main'].ClinicalConsistencyTransformer = ClinicalConsistencyTransformer
+    _sys.modules['main'].MissingIndicatorAdder = MissingIndicatorAdder
+
 
 # ==============================================================================
 # App config + model loader
