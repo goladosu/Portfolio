@@ -627,7 +627,7 @@ def page_projects():
         st.metric("Forecast Accuracy", "83%")
     
     if st.button("📊 View Revenue Dashboard", key="revenue", use_container_width=True):
-        st.session_state.page = "Revenue Cycle Dashboard"
+        st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
         st.rerun()
     
     st.divider()
