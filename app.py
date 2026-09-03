@@ -143,7 +143,11 @@ load_err = None
 # Navigation state
 # ==============================================================================
 
+<<<<<<< Updated upstream
 PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard and Denial Rate Forecast"]
+=======
+PAGES = ["Home", "Projects Summary", "Clinical Trial Dropout Prediction", "Revenue Cycle Dashboard", "A/B Testing Analysis"]
+>>>>>>> Stashed changes
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -299,21 +303,31 @@ Use the navigation to explore projects, interact with models, and see how data s
     st.divider()
     st.subheader("Quick Links")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
 
     with col1:
         if st.button("📁 Projects Summary", use_container_width=True):
             st.session_state.page = "Projects Summary"
+            st.rerun()
+        
+        if st.button("💰 Revenue Dashboard", use_container_width=True):
+            st.session_state.page = "Revenue Cycle Dashboard"
             st.rerun()
 
     with col2:
         if st.button("🧪 Clinical Trial Dropout Prediction", use_container_width=True):
             st.session_state.page = "Clinical Trial Dropout Prediction"
             st.rerun()
+<<<<<<< Updated upstream
 
     with col3:
         if st.button("💰 Revenue Dashboard", use_container_width=True):
             st.session_state.page = "Revenue Cycle Dashboard and Denial Rate Forecast"
+=======
+        
+        if st.button("📊 A/B Testing Analysis", use_container_width=True):
+            st.session_state.page = "A/B Testing Analysis"
+>>>>>>> Stashed changes
             st.rerun()
 
 
@@ -632,6 +646,37 @@ def page_projects():
     
     st.divider()
     
+    # Project 3: A/B Testing Analysis
+    st.subheader("📊 A/B Testing: Frequentist vs. Bayesian Analysis & the Peeking Problem")
+    
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        st.markdown("""
+        **Comprehensive statistical analysis comparing two frameworks and exposing a critical testing mistake**
+        
+        - **Dataset:** 290,584 e-commerce visitors across 22 days (Jan 2-24, 2017)
+        - **Methods:** Frequentist z-test, Bayesian Beta-Binomial, Monte Carlo simulation
+        - **Key Findings:**
+          - Frequentist: p = 0.19 (not significant), 95% CI includes zero
+          - Bayesian: Only 9.6% probability treatment is better, 30× higher expected loss
+          - Geographic: Consistent null result across all markets (US, UK, CA)
+          - **Peeking Problem:** Naive continuous monitoring inflates false positives by 4.6× (from 5% to 23%)
+        - **Recommendation:** Do not launch new page; implement sequential testing corrections for future experiments
+        - **Impact:** Demonstrates rigorous statistical thinking and awareness of common A/B testing pitfalls
+        """)
+    
+    with col2:
+        st.metric("Sample Size", "290K")
+        st.metric("P-Value", "0.19")
+        st.metric("FP Inflation", "4.6×")
+    
+    if st.button("📈 Explore A/B Testing Analysis", key="abtest", use_container_width=True):
+        st.session_state.page = "A/B Testing Analysis"
+        st.rerun()
+    
+    st.divider()
+    
     # Technical Skills
     st.subheader("🛠️ Technical Skills Demonstrated")
     
@@ -647,7 +692,16 @@ def page_projects():
         - Hyperparameter tuning
         - Class imbalance handling
         - SHAP interpretability
+<<<<<<< Updated upstream
         - Walk-forward cross-validation
+=======
+        
+        **Statistical Analysis**
+        - A/B testing (frequentist & Bayesian)
+        - Hypothesis testing
+        - Monte Carlo simulation
+        - Sequential testing methods
+>>>>>>> Stashed changes
         """)
     
     with col2:
@@ -1425,6 +1479,7 @@ def show_revenue_dashboard():
     st.caption("💡 Click the button above to explore the full interactive dashboard with drill-down capabilities")
 
 
+<<<<<<< Updated upstream
 def show_denial_forecast():
     st.title("📊 Denial Rate Forecast")
     
@@ -1552,10 +1607,166 @@ def page_revenue_dashboard():
     
     # Sub-navigation buttons
     st.markdown("### Revenue Cycle Dashboard and Denial Rate Forecast")
+=======
+def page_ab_testing():
+    st.title("📊 A/B Testing Analysis: Frequentist vs. Bayesian & the Peeking Problem")
+    
+    # Project overview
+    with st.expander("📋 Project Overview", expanded=True):
+        st.markdown("""
+        ### The Question
+        Does the redesigned checkout page (`new_page`) convert better than the existing page (`old_page`)?
+        
+        This analysis examines an e-commerce A/B test with **~290K visitors** over **22 days** (Jan 2-24, 2017).
+        
+        ### Why This Matters
+        This project explores:
+        - **Frequentist vs. Bayesian approaches**: Two complementary statistical frameworks
+        - **Geographic segmentation**: Does the effect vary by market (US, UK, CA)?
+        - **The peeking problem**: How continuous monitoring inflates false positive rates
+        """)
+    
+    # Load data
+    try:
+        df = pd.read_csv('/Workspace/Users/goladosurahman@gmail.com/Portfolio/AB Testing/ab_clean.csv')
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        
+        # Extract control and treatment groups
+        control = df[df['con_treat'] == 'control']['converted']
+        treatment = df[df['con_treat'] == 'treatment']['converted']
+        
+        # Sidebar navigation
+        st.sidebar.markdown("---")
+        st.sidebar.subheader("Analysis Sections")
+        section = st.sidebar.radio(
+            "Jump to:",
+            ["📊 Data Summary", "🔬 Frequentist Analysis", "🎲 Bayesian Analysis", 
+             "🌍 Country Segmentation", "👀 Peeking Problem", "✅ Recommendation"]
+        )
+        
+        # Key metrics row
+        st.markdown("### Key Results at a Glance")
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric("Total Visitors", f"{len(df):,}")
+        with col2:
+            st.metric("Control Conversion", f"{control.mean():.2%}")
+        with col3:
+            st.metric("Treatment Conversion", f"{treatment.mean():.2%}")
+        with col4:
+            diff = treatment.mean() - control.mean()
+            st.metric("Difference", f"{diff:.3%}", delta=f"{diff:.3%}", delta_color="inverse" if diff < 0 else "normal")
+        
+        st.divider()
+        
+        # Section routing
+        if section == "📊 Data Summary":
+            show_data_summary_section(df)
+        elif section == "🔬 Frequentist Analysis":
+            show_frequentist_section(control, treatment)
+        elif section == "🎲 Bayesian Analysis":
+            show_bayesian_section(control, treatment)
+        elif section == "🌍 Country Segmentation":
+            show_country_section(df)
+        elif section == "👀 Peeking Problem":
+            show_peeking_section(df)
+        elif section == "✅ Recommendation":
+            show_recommendation_section(control, treatment)
+            
+    except FileNotFoundError:
+        st.error("❌ Data file not found. Please ensure ab_clean.csv is available in your workspace.")
+        st.info("Expected path: /Workspace/Users/goladosurahman@gmail.com/ab_clean.csv")
+
+
+def show_data_summary_section(df):
+    st.subheader("📊 Data Summary")
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        # Timeline visualization
+        df['date'] = df['timestamp'].dt.date
+        daily_data = df.groupby(['date', 'con_treat']).agg({
+            'converted': ['sum', 'count']
+        }).reset_index()
+        daily_data.columns = ['date', 'con_treat', 'conversions', 'total']
+        daily_data['conversion_rate'] = daily_data['conversions'] / daily_data['total']
+        
+        fig = go.Figure()
+        for group in ['control', 'treatment']:
+            group_data = daily_data[daily_data['con_treat'] == group]
+            fig.add_trace(go.Scatter(
+                x=group_data['date'],
+                y=group_data['conversion_rate'],
+                mode='lines+markers',
+                name=group.capitalize(),
+                line=dict(width=2)
+            ))
+        
+        fig.update_layout(
+            title="Daily Conversion Rates by Group",
+            xaxis_title="Date",
+            yaxis_title="Conversion Rate",
+            height=400
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    with col2:
+        st.markdown("### Dataset Info")
+        st.metric("Experiment Duration", "22 days")
+        st.metric("Date Range", "Jan 2-24, 2017")
+        st.metric("Countries", df['country'].nunique())
+        st.metric("Control Group", f"{len(df[df['con_treat']=='control']):,}")
+        st.metric("Treatment Group", f"{len(df[df['con_treat']=='treatment']):,}")
+    
+    # Data preview
+    st.markdown("### Data Preview")
+    st.dataframe(df.head(10), use_container_width=True)
+
+
+def show_frequentist_section(control, treatment):
+    st.subheader("🔬 Frequentist Analysis: Two-Proportion Z-Test")
+    
+    n_c, n_t = len(control), len(treatment)
+    p_c, p_t = control.mean(), treatment.mean()
+    
+    # Pooled proportion and standard error
+    p_pool = (control.sum() + treatment.sum()) / (n_c + n_t)
+    se_pooled = np.sqrt(p_pool * (1 - p_pool) * (1/n_c + 1/n_t))
+    
+    # Z-statistic and p-value
+    from scipy import stats
+    z_stat = (p_t - p_c) / se_pooled
+    p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+    
+    # Confidence interval
+    se_unpooled = np.sqrt(p_c*(1-p_c)/n_c + p_t*(1-p_t)/n_t)
+    ci_low = (p_t - p_c) - 1.96*se_unpooled
+    ci_high = (p_t - p_c) + 1.96*se_unpooled
+    
+    # Display results
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.metric("Control Conversion", f"{p_c:.5f}")
+        st.caption(f"n = {n_c:,}")
+    
+    with col2:
+        st.metric("Treatment Conversion", f"{p_t:.5f}")
+        st.caption(f"n = {n_t:,}")
+    
+    with col3:
+        st.metric("Observed Difference", f"{(p_t - p_c):.5f}")
+        st.caption(f"{(p_t - p_c)*100:.3f}%")
+    
+    st.divider()
+>>>>>>> Stashed changes
     
     col1, col2 = st.columns(2)
     
     with col1:
+<<<<<<< Updated upstream
         if st.button("📊 Revenue Cycle Dashboard", use_container_width=True, type="primary" if st.session_state.rcm_subpage == "Revenue Cycle Dashboard" else "secondary"):
             st.session_state.rcm_subpage = "Revenue Cycle Dashboard"
             st.rerun()
@@ -1572,6 +1783,445 @@ def page_revenue_dashboard():
         show_revenue_dashboard()
     else:
         show_denial_forecast()
+=======
+        st.markdown("### Test Results")
+        st.metric("Z-Statistic", f"{z_stat:.4f}")
+        st.metric("P-Value", f"{p_value:.4f}")
+        
+        if p_value < 0.05:
+            st.success("✅ Statistically significant at α = 0.05")
+        else:
+            st.warning("⚠️ Not statistically significant at α = 0.05")
+    
+    with col2:
+        st.markdown("### 95% Confidence Interval")
+        st.write(f"Lower Bound: **{ci_low:.5f}**")
+        st.write(f"Upper Bound: **{ci_high:.5f}**")
+        
+        if ci_low < 0 < ci_high:
+            st.info("ℹ️ Interval includes zero — consistent with no effect")
+    
+    st.markdown("""
+    ### Interpretation
+    
+    With a p-value of approximately **0.19**, we cannot reject the null hypothesis at the conventional 
+    α=0.05 significance level. This means:
+    
+    - **No statistically significant evidence** that the new page converts better
+    - The **confidence interval crosses zero**, indicating the true difference could be positive, negative, or essentially zero
+    - From a frequentist perspective, **we would not recommend launching** the new page
+    """)
+
+
+def show_bayesian_section(control, treatment):
+    st.subheader("🎲 Bayesian Analysis: Beta-Binomial Model")
+    
+    # Beta-Binomial with flat prior
+    alpha_prior, beta_prior = 1, 1
+    n_c, n_t = len(control), len(treatment)
+    
+    a_c = alpha_prior + control.sum()
+    b_c = beta_prior + n_c - control.sum()
+    a_t = alpha_prior + treatment.sum()
+    b_t = beta_prior + n_t - treatment.sum()
+    
+    # Draw samples
+    n_samples = 200_000
+    np.random.seed(42)
+    samples_c = np.random.beta(a_c, b_c, n_samples)
+    samples_t = np.random.beta(a_t, b_t, n_samples)
+    diff = samples_t - samples_c
+    
+    # Calculate metrics
+    prob_treatment_better = (diff > 0).mean()
+    expected_loss_treatment = np.maximum(samples_c - samples_t, 0).mean()
+    expected_loss_control = np.maximum(samples_t - samples_c, 0).mean()
+    
+    # Display metrics
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.metric("P(Treatment > Control)", f"{prob_treatment_better:.2%}")
+    
+    with col2:
+        st.metric("Expected Loss (Ship Treatment)", f"{expected_loss_treatment:.6f}")
+    
+    with col3:
+        st.metric("Expected Loss (Keep Control)", f"{expected_loss_control:.6f}")
+    
+    st.divider()
+    
+    # Posterior distributions
+    st.markdown("### Posterior Distributions")
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Histogram(
+        x=samples_c,
+        name='Control',
+        opacity=0.6,
+        nbinsx=100,
+        histnorm='probability density'
+    ))
+    
+    fig.add_trace(go.Histogram(
+        x=samples_t,
+        name='Treatment',
+        opacity=0.6,
+        nbinsx=100,
+        histnorm='probability density'
+    ))
+    
+    fig.update_layout(
+        title="Posterior Distributions of Conversion Rate by Group",
+        xaxis_title="Conversion Rate",
+        yaxis_title="Posterior Density",
+        barmode='overlay',
+        height=500
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Interpretation
+    loss_ratio = expected_loss_treatment / expected_loss_control if expected_loss_control > 0 else float('inf')
+    
+    st.markdown(f"""
+    ### Interpretation
+    
+    The Bayesian analysis provides a probability-based perspective:
+    
+    - Only **{prob_treatment_better:.1%} probability** that treatment truly converts better
+    - Expected loss from shipping treatment is **{loss_ratio:.1f}× larger** than keeping control
+    - The posterior distributions **heavily overlap**, indicating substantial uncertainty
+    - **Bayesian conclusion agrees with frequentist**: insufficient evidence to launch the new page
+    """)
+
+
+def show_country_section(df):
+    st.subheader("🌍 Country Segmentation Analysis")
+    
+    st.markdown("""
+    Before making a final recommendation, it's important to check if the aggregate result 
+    is hiding country-specific effects.
+    """)
+    
+    # Calculate country-level statistics
+    country_results = []
+    for country in df['country'].unique():
+        country_data = df[df['country'] == country]
+        c = country_data[country_data['con_treat'] == 'control']['converted']
+        t = country_data[country_data['con_treat'] == 'treatment']['converted']
+        
+        if len(c) > 0 and len(t) > 0:
+            p_c, p_t = c.mean(), t.mean()
+            p_pool = (c.sum() + t.sum()) / (len(c) + len(t))
+            se = np.sqrt(p_pool * (1 - p_pool) * (1/len(c) + 1/len(t)))
+            
+            if se > 0:
+                from scipy import stats
+                z = (p_t - p_c) / se
+                p_val = 2 * (1 - stats.norm.cdf(abs(z)))
+            else:
+                p_val = 1.0
+            
+            country_results.append({
+                'Country': country,
+                'Control N': len(c),
+                'Treatment N': len(t),
+                'Control Conv': p_c,
+                'Treatment Conv': p_t,
+                'Difference': p_t - p_c,
+                'P-Value': p_val
+            })
+    
+    country_df = pd.DataFrame(country_results)
+    
+    # Display table
+    st.markdown("### Results by Country")
+    display_df = country_df.copy()
+    display_df['Control Conv'] = display_df['Control Conv'].apply(lambda x: f"{x:.5f}")
+    display_df['Treatment Conv'] = display_df['Treatment Conv'].apply(lambda x: f"{x:.5f}")
+    display_df['Difference'] = display_df['Difference'].apply(lambda x: f"{x:.5f}")
+    display_df['P-Value'] = display_df['P-Value'].apply(lambda x: f"{x:.5f}")
+    
+    st.dataframe(display_df, use_container_width=True)
+    
+    # Visualization
+    st.markdown("### Conversion Rates by Country")
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(
+        name='Control',
+        x=country_df['Country'],
+        y=country_df['Control Conv'],
+        text=country_df['Control Conv'].apply(lambda x: f"{x:.3%}"),
+        textposition='auto'
+    ))
+    
+    fig.add_trace(go.Bar(
+        name='Treatment',
+        x=country_df['Country'],
+        y=country_df['Treatment Conv'],
+        text=country_df['Treatment Conv'].apply(lambda x: f"{x:.3%}"),
+        textposition='auto'
+    ))
+    
+    fig.update_layout(
+        title="Conversion Rate by Country and Group",
+        xaxis_title="Country",
+        yaxis_title="Conversion Rate",
+        barmode='group',
+        height=500
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Interpretation
+    significant_countries = country_df[country_df['P-Value'] < 0.05]['Country'].tolist()
+    
+    if significant_countries:
+        st.warning(f"⚠️ **Significant differences found in**: {', '.join(significant_countries)}")
+    else:
+        st.success("""
+        ✅ **No country shows a significant difference** (all p-values > 0.05)
+        
+        - The null result holds **consistently across all markets**
+        - This is **not** a case where geographic effects are canceling out
+        - The recommendation applies universally: don't launch in any market
+        """)
+
+
+def show_peeking_section(df):
+    st.subheader("👀 The Peeking Problem")
+    
+    st.markdown("""
+    ### What is the Peeking Problem?
+    
+    A common mistake in A/B testing: checking results repeatedly and stopping the moment 
+    p < 0.05. Each additional "look" gives random noise another chance to trigger a 
+    false positive, **inflating the actual false positive rate far above 5%**.
+    """)
+    
+    # Running p-value on real data
+    st.markdown("### Real Experiment: Running P-Value Over Time")
+    
+    with st.spinner('Calculating running p-values...'):
+        seq_data = df.sort_values('timestamp').reset_index(drop=True)
+        N = len(seq_data)
+        checkpoints = np.linspace(1000, N, 50).astype(int)
+        
+        pvals_real = []
+        checkpoint_dates = []
+        
+        for n in checkpoints:
+            chunk = seq_data.iloc[:n]
+            c = chunk[chunk['con_treat'] == 'control']['converted']
+            t = chunk[chunk['con_treat'] == 'treatment']['converted']
+            
+            if len(c) >= 30 and len(t) >= 30:
+                p_pool = (c.sum() + t.sum()) / (len(c) + len(t))
+                se = np.sqrt(p_pool * (1 - p_pool) * (1/len(c) + 1/len(t)))
+                if se > 0:
+                    from scipy import stats
+                    z = (t.mean() - c.mean()) / se
+                    p = 2 * (1 - stats.norm.cdf(abs(z)))
+                    pvals_real.append(p)
+                    checkpoint_dates.append(seq_data.iloc[n-1]['timestamp'])
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+        x=checkpoint_dates,
+        y=pvals_real,
+        mode='lines+markers',
+        name='Running P-Value',
+        line=dict(width=2)
+    ))
+    
+    fig.add_hline(y=0.05, line_dash="dash", line_color="red", 
+                  annotation_text="α = 0.05")
+    
+    fig.update_layout(
+        title="Running P-Value Throughout the Experiment (Jan 2017)",
+        xaxis_title="Date",
+        yaxis_title="Running P-Value",
+        height=500
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    naive_stops = sum(1 for p in pvals_real if p < 0.05)
+    st.info(f"📊 The p-value crossed 0.05 at **{naive_stops} of {len(pvals_real)} checkpoints** in this experiment.")
+    
+    # Monte Carlo simulation summary
+    st.markdown("### Monte Carlo Simulation Results")
+    
+    st.markdown("""
+    To measure the true impact of peeking, I simulated **2,000 fake experiments** where 
+    both groups have identical conversion rates (null hypothesis is true). Any "significant" 
+    result is a false positive by definition.
+    """)
+    
+    # Show simulation results (from the analysis)
+    sim_results = pd.DataFrame({
+        'Method': [
+            'Naive peeking (20 looks)',
+            "O'Brien-Fleming corrected (20 looks)",
+            'Fixed horizon (1 look)'
+        ],
+        'False Positive Rate': [0.229, 0.071, 0.048],
+        'Nominal Target': [0.05, 0.05, 0.05]
+    })
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.metric(
+            "Naive Peeking",
+            f"{sim_results.iloc[0]['False Positive Rate']:.1%}",
+            delta=f"+{(sim_results.iloc[0]['False Positive Rate'] - 0.05)*100:.1f}pp",
+            delta_color="inverse"
+        )
+    
+    with col2:
+        st.metric(
+            "O'Brien-Fleming",
+            f"{sim_results.iloc[1]['False Positive Rate']:.1%}",
+            delta=f"{(sim_results.iloc[1]['False Positive Rate'] - 0.05)*100:+.1f}pp"
+        )
+    
+    with col3:
+        st.metric(
+            "Fixed Horizon",
+            f"{sim_results.iloc[2]['False Positive Rate']:.1%}",
+            delta=f"{(sim_results.iloc[2]['False Positive Rate'] - 0.05)*100:+.1f}pp"
+        )
+    
+    # Visualization
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(
+        x=sim_results['Method'],
+        y=sim_results['False Positive Rate'],
+        text=sim_results['False Positive Rate'].apply(lambda x: f"{x:.1%}"),
+        textposition='auto',
+        marker_color=['#d62728', '#2ca02c', '#1f77b4']
+    ))
+    
+    fig.add_hline(y=0.05, line_dash="dash", line_color="black", 
+                  annotation_text="Nominal α = 0.05")
+    
+    fig.update_layout(
+        title="False Positive Rate Under the Null (2,000 Simulated Experiments)",
+        xaxis_title="Method",
+        yaxis_title="False Positive Rate",
+        height=500
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    # Key findings
+    inflation = sim_results.iloc[0]['False Positive Rate'] / 0.05
+    
+    st.markdown(f"""
+    ### Key Findings
+    
+    🚨 **Naive peeking inflates the false positive rate by {inflation:.1f}×** (from 5% to {sim_results.iloc[0]['False Positive Rate']:.1%})
+    
+    - **O'Brien-Fleming correction** brings it back close to 5% by using stricter thresholds early on
+    - **Fixed horizon** (wait until the end) naturally controls the rate at the nominal 5%
+    - **Bottom line**: Continuous monitoring without correction is dangerous!
+    """)
+
+
+def show_recommendation_section(control, treatment):
+    st.subheader("✅ Final Recommendation")
+    
+    # Calculate key metrics
+    n_c, n_t = len(control), len(treatment)
+    p_c, p_t = control.mean(), treatment.mean()
+    p_pool = (control.sum() + treatment.sum()) / (n_c + n_t)
+    se_pooled = np.sqrt(p_pool * (1 - p_pool) * (1/n_c + 1/n_t))
+    
+    from scipy import stats
+    z_stat = (p_t - p_c) / se_pooled
+    p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+    
+    # Bayesian metrics
+    alpha_prior, beta_prior = 1, 1
+    a_c = alpha_prior + control.sum()
+    b_c = beta_prior + n_c - control.sum()
+    a_t = alpha_prior + treatment.sum()
+    b_t = beta_prior + n_t - treatment.sum()
+    
+    np.random.seed(42)
+    samples_c = np.random.beta(a_c, b_c, 200_000)
+    samples_t = np.random.beta(a_t, b_t, 200_000)
+    diff = samples_t - samples_c
+    
+    prob_treatment_better = (diff > 0).mean()
+    
+    # Display recommendation
+    st.error("""
+    ## 🚫 Do Not Launch the New Page
+    
+    ### Summary of Evidence
+    """)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        #### Frequentist Analysis
+        - P-value: **0.19** (not significant)
+        - 95% CI includes zero
+        - No evidence of improvement
+        
+        #### Geographic Analysis
+        - All markets (US, UK, CA) show p > 0.05
+        - No hidden country-specific effects
+        - Consistent null result everywhere
+        """)
+    
+    with col2:
+        st.markdown(f"""
+        #### Bayesian Analysis
+        - Only **{prob_treatment_better:.1%}** probability treatment is better
+        - Expected loss **30× higher** if we launch
+        - Posterior distributions heavily overlap
+        
+        #### Peeking Problem
+        - Naive monitoring inflates false positives by **4-5×**
+        - Need sequential testing corrections for future tests
+        """)
+    
+    st.divider()
+    
+    st.markdown("""
+    ### What This Means
+    
+    1. **No statistical evidence** the redesigned page converts better than the existing page
+    2. **Both frameworks agree** (frequentist and Bayesian reach the same conclusion)
+    3. **All markets show the same pattern** (not a geographic artifact)
+    4. **Expected loss analysis** strongly favors keeping the control page
+    
+    ### Recommendations for Future Testing
+    
+    - ✅ Pre-commit to a sample size and don't peek
+    - ✅ If continuous monitoring is required, use sequential testing methods (e.g., O'Brien-Fleming)
+    - ✅ Consider larger or more impactful design changes if redesign is a priority
+    - ✅ Conduct qualitative research to understand why the new page didn't perform better
+    """)
+    
+    # Link to notebook
+    st.divider()
+    st.markdown("### 📚 Full Technical Analysis")
+    st.info("""
+    For the complete analysis with all code, methodology, and detailed explanations, 
+    see the [AB_Testing_Analysis notebook](#notebook-362769562070770) in this workspace.
+    """)
+>>>>>>> Stashed changes
 
 
 # ==============================================================================
@@ -1588,3 +2238,5 @@ elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
 elif page == "Revenue Cycle Dashboard and Denial Rate Forecast":
     page_revenue_dashboard()
+elif page == "A/B Testing Analysis":
+    page_ab_testing()

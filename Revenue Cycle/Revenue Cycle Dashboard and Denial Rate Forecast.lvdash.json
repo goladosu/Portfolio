@@ -1,0 +1,2165 @@
+{
+  "datasets": [
+    {
+      "name": "bd4b298c",
+      "displayName": "v_ar_aging",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_ar_aging",
+        "dimensions": [
+          {
+            "name": "ar_bucket",
+            "expr": "source.ar_bucket",
+            "displayName": "Ar Bucket"
+          },
+          {
+            "name": "claims",
+            "expr": "source.claims",
+            "displayName": "Claims"
+          },
+          {
+            "name": "paid",
+            "expr": "source.paid",
+            "displayName": "Paid"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "f3da903f",
+      "displayName": "v_exec_kpis",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_exec_kpis",
+        "dimensions": [
+          {
+            "name": "encounters",
+            "expr": "source.encounters",
+            "displayName": "Encounters"
+          },
+          {
+            "name": "claims",
+            "expr": "source.claims",
+            "displayName": "Claims"
+          },
+          {
+            "name": "total_billed",
+            "expr": "source.total_billed",
+            "displayName": "Total Billed"
+          },
+          {
+            "name": "total_allowed",
+            "expr": "source.total_allowed",
+            "displayName": "Total Allowed"
+          },
+          {
+            "name": "total_paid",
+            "expr": "source.total_paid",
+            "displayName": "Total Paid"
+          },
+          {
+            "name": "net_revenue",
+            "expr": "source.net_revenue",
+            "displayName": "Net Revenue"
+          },
+          {
+            "name": "collection_rate",
+            "expr": "source.collection_rate",
+            "displayName": "Collection Rate"
+          },
+          {
+            "name": "denial_rate",
+            "expr": "source.denial_rate",
+            "displayName": "Denial Rate"
+          },
+          {
+            "name": "underpayment_rate",
+            "expr": "source.underpayment_rate",
+            "displayName": "Underpayment Rate"
+          },
+          {
+            "name": "avg_days_in_ar",
+            "expr": "source.avg_days_in_ar",
+            "displayName": "Avg Days In Ar"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "922c6065",
+      "displayName": "v_kpi_trend_month",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_kpi_trend_month",
+        "dimensions": [
+          {
+            "name": "month",
+            "expr": "source.month",
+            "displayName": "Month"
+          },
+          {
+            "name": "billed",
+            "expr": "source.billed",
+            "displayName": "Billed"
+          },
+          {
+            "name": "allowed",
+            "expr": "source.allowed",
+            "displayName": "Allowed"
+          },
+          {
+            "name": "paid",
+            "expr": "source.paid",
+            "displayName": "Paid"
+          },
+          {
+            "name": "collection_rate",
+            "expr": "source.collection_rate",
+            "displayName": "Collection Rate"
+          },
+          {
+            "name": "denial_rate",
+            "expr": "source.denial_rate",
+            "displayName": "Denial Rate"
+          },
+          {
+            "name": "avg_days_in_ar",
+            "expr": "source.avg_days_in_ar",
+            "displayName": "Avg Days In Ar"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "b8d39617",
+      "displayName": "v_kpi_department",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_kpi_department",
+        "dimensions": [
+          {
+            "name": "department",
+            "expr": "source.department",
+            "displayName": "Department"
+          },
+          {
+            "name": "service_line",
+            "expr": "source.service_line",
+            "displayName": "Service Line"
+          },
+          {
+            "name": "encounters",
+            "expr": "source.encounters",
+            "displayName": "Encounters"
+          },
+          {
+            "name": "claims",
+            "expr": "source.claims",
+            "displayName": "Claims"
+          },
+          {
+            "name": "paid",
+            "expr": "source.paid",
+            "displayName": "Paid"
+          },
+          {
+            "name": "billed",
+            "expr": "source.billed",
+            "displayName": "Billed"
+          },
+          {
+            "name": "collection_rate",
+            "expr": "source.collection_rate",
+            "displayName": "Collection Rate"
+          },
+          {
+            "name": "denial_rate",
+            "expr": "source.denial_rate",
+            "displayName": "Denial Rate"
+          },
+          {
+            "name": "avg_days_in_ar",
+            "expr": "source.avg_days_in_ar",
+            "displayName": "Avg Days In Ar"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "9ab30c3f",
+      "displayName": "v_denials_by_reason",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_denials_by_reason",
+        "dimensions": [
+          {
+            "name": "denial_reason",
+            "expr": "source.denial_reason",
+            "displayName": "Denial Reason"
+          },
+          {
+            "name": "denied_claims",
+            "expr": "source.denied_claims",
+            "displayName": "Denied Claims"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    {
+      "name": "2210aed6",
+      "displayName": "v_denials_by_payer",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.v_denials_by_payer",
+        "dimensions": [
+          {
+            "name": "payer_name",
+            "expr": "source.payer_name",
+            "displayName": "Payer Name"
+          },
+          {
+            "name": "payer_type",
+            "expr": "source.payer_type",
+            "displayName": "Payer Type"
+          },
+          {
+            "name": "claims",
+            "expr": "source.claims",
+            "displayName": "Claims"
+          },
+          {
+            "name": "denied_claims",
+            "expr": "source.denied_claims",
+            "displayName": "Denied Claims"
+          },
+          {
+            "name": "denial_rate",
+            "expr": "source.denial_rate",
+            "displayName": "Denial Rate"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset",
+            "displayName": "Count"
+          },
+          {
+            "name": "total_claims",
+            "expr": "SUM(source.claims)",
+            "displayName": "Total Claims"
+          },
+          {
+            "name": "total_denied_claims",
+            "expr": "SUM(source.denied_claims)",
+            "displayName": "Total Denied Claims"
+          },
+          {
+            "name": "estimated_billed",
+            "expr": "SUM(source.claims * 5000)",
+            "displayName": "Estimated Billed",
+            "comment": "Estimated billed amount at $5000 per claim"
+          },
+          {
+            "name": "estimated_paid",
+            "expr": "SUM(source.claims * 5000 * (1 - source.denial_rate))",
+            "displayName": "Estimated Paid",
+            "comment": "Estimated paid amount after denials"
+          },
+          {
+            "name": "estimated_net_revenue",
+            "expr": "SUM(source.claims * 5000 * (1 - source.denial_rate) * 0.95)",
+            "displayName": "Estimated Net Revenue",
+            "comment": "Net revenue after denials and adjustments"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "9d28c0a7",
+      "displayName": "Executive Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "total_encounters",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "encounters",
+                      "expression": "`encounters`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Encounters",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "encounters"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total_claims",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Claims",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "claims"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total_billed",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "total_billed",
+                      "expression": "`total_billed`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Billed",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_billed"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "total_paid",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "total_paid",
+                      "expression": "`total_paid`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Paid",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_paid"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "collection_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Collection Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "collection_rate"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "denial_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Denial Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "denial_rate"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 10,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "avg_days_ar",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "avg_days_in_ar",
+                      "expression": "`avg_days_in_ar`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Avg Days in AR",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg_days_in_ar"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 3,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "net_revenue",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "net_revenue",
+                      "expression": "`net_revenue`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Net Revenue",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "net_revenue"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 3,
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "collection_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "922c6065",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Collection Rate Trend",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "collection_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 3,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "denial_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "922c6065",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Denial Rate Trend",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "denial_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 3,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "922c6065",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "billed",
+                      "expression": "`billed`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Revenue Trend (Billed vs Paid)",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "billed",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "ar_days_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "922c6065",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "avg_days_in_ar",
+                      "expression": "`avg_days_in_ar`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Days in AR Trend",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg_days_in_ar",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 9,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "departmental",
+      "displayName": "Departmental Performance",
+      "layout": [
+        {
+          "widget": {
+            "name": "dept_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b8d39617",
+                  "fields": [
+                    {
+                      "name": "department",
+                      "expression": "`department`"
+                    },
+                    {
+                      "name": "service_line",
+                      "expression": "`service_line`"
+                    },
+                    {
+                      "name": "encounters",
+                      "expression": "`encounters`"
+                    },
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    },
+                    {
+                      "name": "billed",
+                      "expression": "`billed`"
+                    },
+                    {
+                      "name": "paid",
+                      "expression": "`paid`"
+                    },
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    },
+                    {
+                      "name": "avg_days_in_ar",
+                      "expression": "`avg_days_in_ar`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Performance by Department",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "department",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "service_line",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "encounters"
+                  },
+                  {
+                    "fieldName": "claims"
+                  },
+                  {
+                    "fieldName": "billed"
+                  },
+                  {
+                    "fieldName": "paid"
+                  },
+                  {
+                    "fieldName": "collection_rate"
+                  },
+                  {
+                    "fieldName": "denial_rate"
+                  },
+                  {
+                    "fieldName": "avg_days_in_ar"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_collection",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b8d39617",
+                  "fields": [
+                    {
+                      "name": "department",
+                      "expression": "`department`"
+                    },
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Collection Rate by Department",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "department",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "collection_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_denial",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b8d39617",
+                  "fields": [
+                    {
+                      "name": "department",
+                      "expression": "`department`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Denial Rate by Department",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "department",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "denial_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "denials",
+      "displayName": "Denials Analysis",
+      "layout": [
+        {
+          "widget": {
+            "name": "denial_by_reason",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "9ab30c3f",
+                  "fields": [
+                    {
+                      "name": "denied_claims",
+                      "expression": "`denied_claims`"
+                    },
+                    {
+                      "name": "denial_reason",
+                      "expression": "`denial_reason`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Denials by Reason",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "denied_claims",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "denial_reason",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "denial_by_payer",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    },
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    },
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    },
+                    {
+                      "name": "denied_claims",
+                      "expression": "`denied_claims`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Denial Rate by Payer",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "payer_name",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "payer_type",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "claims"
+                  },
+                  {
+                    "fieldName": "denied_claims"
+                  },
+                  {
+                    "fieldName": "denial_rate"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "payer_denial_chart",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Top Payers by Denial Rate",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "payer_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "denial_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 12,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "ar_aging",
+      "displayName": "AR Aging",
+      "layout": [
+        {
+          "widget": {
+            "name": "ar_buckets",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "bd4b298c",
+                  "fields": [
+                    {
+                      "name": "ar_bucket",
+                      "expression": "`ar_bucket`"
+                    },
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    },
+                    {
+                      "name": "paid",
+                      "expression": "`paid`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "AR Aging Buckets",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "ar_bucket",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "claims"
+                  },
+                  {
+                    "fieldName": "paid"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "ar_distribution",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "bd4b298c",
+                  "fields": [
+                    {
+                      "name": "ar_bucket",
+                      "expression": "`ar_bucket`"
+                    },
+                    {
+                      "name": "paid",
+                      "expression": "`paid`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "AR Distribution by Age",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "ar_bucket",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "paid",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "payer_mix",
+      "displayName": "Payer Mix Analysis",
+      "layout": [
+        {
+          "widget": {
+            "name": "payer_summary",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    },
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    },
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    },
+                    {
+                      "name": "denied_claims",
+                      "expression": "`denied_claims`"
+                    },
+                    {
+                      "name": "denial_rate",
+                      "expression": "`denial_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Payer Mix Summary",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "payer_type",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "payer_name",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "claims"
+                  },
+                  {
+                    "fieldName": "denied_claims"
+                  },
+                  {
+                    "fieldName": "denial_rate"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "claims_by_type",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    },
+                    {
+                      "name": "sum(claims)",
+                      "expression": "SUM(`claims`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Claims Volume by Payer Type",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "payer_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(claims)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "payer_pie",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "sum(claims)",
+                      "expression": "SUM(`claims`)"
+                    },
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Payer Mix Distribution",
+                "showTitle": true
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(claims)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "payer_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_by_payer",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    },
+                    {
+                      "name": "measure(estimated_billed)",
+                      "expression": "MEASURE(`estimated_billed`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Revenue by Payer Type",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "payer_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(estimated_billed)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 15,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    },
+                    {
+                      "name": "payer_type",
+                      "expression": "`payer_type`"
+                    },
+                    {
+                      "name": "claims",
+                      "expression": "`claims`"
+                    },
+                    {
+                      "name": "measure(estimated_billed)",
+                      "expression": "MEASURE(`estimated_billed`)"
+                    },
+                    {
+                      "name": "measure(estimated_paid)",
+                      "expression": "MEASURE(`estimated_paid`)"
+                    },
+                    {
+                      "name": "measure(estimated_net_revenue)",
+                      "expression": "MEASURE(`estimated_net_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Revenue Summary by Payer",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "payer_name",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "payer_type",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "claims"
+                  },
+                  {
+                    "fieldName": "measure(estimated_billed)"
+                  },
+                  {
+                    "fieldName": "measure(estimated_paid)"
+                  },
+                  {
+                    "fieldName": "measure(estimated_net_revenue)"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 15,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "paid_by_payer",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "measure(estimated_paid)",
+                      "expression": "MEASURE(`estimated_paid`)"
+                    },
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Total Paid by Payer",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "measure(estimated_paid)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "payer_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 22,
+            "width": 12,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "collection_efficiency",
+      "displayName": "Collection Efficiency",
+      "layout": [
+        {
+          "widget": {
+            "name": "collection_rate_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Overall Collection Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "collection_rate"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "underpayment_rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "underpayment_rate",
+                      "expression": "`underpayment_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Underpayment Rate",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "underpayment_rate"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "total_allowed",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "total_allowed",
+                      "expression": "`total_allowed`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Total Allowed",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "total_allowed"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "net_revenue_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f3da903f",
+                  "fields": [
+                    {
+                      "name": "net_revenue",
+                      "expression": "`net_revenue`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Net Revenue",
+                "showTitle": true
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "net_revenue"
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "dept_efficiency",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b8d39617",
+                  "fields": [
+                    {
+                      "name": "department",
+                      "expression": "`department`"
+                    },
+                    {
+                      "name": "billed",
+                      "expression": "`billed`"
+                    },
+                    {
+                      "name": "paid",
+                      "expression": "`paid`"
+                    },
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Collection Efficiency by Department",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "department",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "billed"
+                  },
+                  {
+                    "fieldName": "paid"
+                  },
+                  {
+                    "fieldName": "collection_rate"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "payer_efficiency",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "2210aed6",
+                  "fields": [
+                    {
+                      "name": "payer_name",
+                      "expression": "`payer_name`"
+                    },
+                    {
+                      "name": "measure(estimated_billed)",
+                      "expression": "MEASURE(`estimated_billed`)"
+                    },
+                    {
+                      "name": "measure(estimated_paid)",
+                      "expression": "MEASURE(`estimated_paid`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "title": "Collection Efficiency by Payer",
+                "showTitle": true
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "payer_name",
+                    "useForSearch": true
+                  },
+                  {
+                    "fieldName": "measure(estimated_billed)"
+                  },
+                  {
+                    "fieldName": "measure(estimated_paid)"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "collection_vs_allowed",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "922c6065",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "collection_rate",
+                      "expression": "`collection_rate`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Collection Rate Trend",
+                "showTitle": true
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "collection_rate",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 12,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

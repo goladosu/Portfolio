@@ -1,0 +1,9 @@
+department_id,department,service_line
+1,Emergency Dept,ED
+2,Radiology,Imaging
+3,Surgery,Surgical
+4,Med/Surg,Inpatient
+5,ICU,Inpatient
+6,Cardiology,Specialty
+7,Oncology,Specialty
+8,Lab,Ancillary
