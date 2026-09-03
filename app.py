@@ -2073,7 +2073,7 @@ elif page == "Projects Summary":
     page_projects()
 elif page == "Clinical Trial Dropout Prediction":
     page_dropout_project()
-elif page == "Revenue Cycle Dashboard and Denial Rate Forecast":
+elif page == "Revenue Cycle Dashboard":
     page_revenue_dashboard()
 elif page == "A/B Testing Analysis":
     page_ab_testing()
