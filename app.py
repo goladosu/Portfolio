@@ -116,7 +116,7 @@ sys.modules["__main__"] = sys.modules[__name__]
 
 st.set_page_config(page_title="Abdul Oladosu", layout="wide")
 
-MODEL_PATH = "xgb_dropout_pipeline.pkl"
+MODEL_PATH = "Clinical Trial/xgb_dropout_pipeline.pkl"
 
 # Deployment cutoff, set by evaluation notebook
 CHOSEN_THRESHOLD = 0.30
@@ -1485,7 +1485,7 @@ def page_ab_testing():
     
     # Load data
     try:
-        df = pd.read_csv('/Workspace/Users/goladosurahman@gmail.com/Portfolio/AB Testing/ab_clean.csv')
+        df = pd.read_csv('AB Testing/ab_clean.csv')
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         
         # Extract control and treatment groups
@@ -1533,7 +1533,7 @@ def page_ab_testing():
             
     except FileNotFoundError:
         st.error("❌ Data file not found. Please ensure ab_clean.csv is available in your workspace.")
-        st.info("Expected path: /Workspace/Users/goladosurahman@gmail.com/ab_clean.csv")
+        st.info("Expected path: AB Testing/ab_clean.csv")
 
 
 def show_data_summary_section(df):
